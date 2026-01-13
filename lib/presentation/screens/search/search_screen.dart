@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:quote_vault/core/navigation/navigation_helper.dart';
-import 'package:quote_vault/presentation/widgets/navigation/app_scaffold.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -9,12 +6,26 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentRoute = GoRouterState.of(context).uri.path;
-    
-    return AppScaffold(
-      currentNavIndex: NavigationHelper.getCurrentNavIndex(currentRoute),
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Search'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search quotes...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                filled: true,
+                fillColor: Theme.of(context).cardColor,
+              ),
+            ),
+          ),
+        ),
       ),
       body: const Center(
         child: Column(

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:quote_vault/core/navigation/navigation_helper.dart';
-import 'package:quote_vault/presentation/widgets/navigation/app_scaffold.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -9,12 +6,17 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentRoute = GoRouterState.of(context).uri.path;
-    
-    return AppScaffold(
-      currentNavIndex: NavigationHelper.getCurrentNavIndex(currentRoute),
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Favorites'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.sort),
+            onPressed: () {
+              // Sort favorites functionality
+            },
+          ),
+        ],
       ),
       body: const Center(
         child: Column(

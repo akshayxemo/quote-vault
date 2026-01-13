@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:quote_vault/core/navigation/navigation_helper.dart';
-import 'package:quote_vault/presentation/widgets/navigation/app_scaffold.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 
 class QuotesScreen extends StatelessWidget {
@@ -9,12 +6,17 @@ class QuotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentRoute = GoRouterState.of(context).uri.path;
-    
-    return AppScaffold(
-      currentNavIndex: NavigationHelper.getCurrentNavIndex(currentRoute),
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Quotes'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              // Add new quote functionality
+            },
+          ),
+        ],
       ),
       body: const Center(
         child: Column(
