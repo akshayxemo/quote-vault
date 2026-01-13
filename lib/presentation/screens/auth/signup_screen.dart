@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_vault/core/constants/app_constants.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
-import 'package:quote_vault/presentation/widgets/common/custom_card.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_event.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_state.dart';
