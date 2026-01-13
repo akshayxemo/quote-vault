@@ -1,12 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
-import 'package:quote_vault/domain/entities/auth_session.dart';
-import 'package:quote_vault/domain/entities/user.dart';
-import 'package:quote_vault/domain/repositories/auth_repository.dart';
+import 'package:quote_vault/domain/repositories/auth/auth_repository.dart';
 import 'package:quote_vault/core/error/failures.dart';
-import 'package:quote_vault/data/datasources/auth_remote_datasource.dart';
-import 'package:quote_vault/data/datasources/auth_local_datasource.dart';
-import 'package:quote_vault/data/models/auth_session_model.dart';
+import 'package:quote_vault/data/datasources/auth/auth_remote_datasource.dart';
+import 'package:quote_vault/data/datasources/auth/auth_local_datasource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -18,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, AuthSession>> signUp({
+  Future<Either<Failure, Session>> signUp({
     required String email,
     required String password,
     String? fullName,
@@ -38,7 +35,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, AuthSession>> signIn({
+  Future<Either<Failure, Session>> signIn({
     required String email,
     required String password,
   }) async {
@@ -69,7 +66,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, AuthSession?>> getCurrentSession() async {
+  Future<Either<Failure, Session?>> getCurrentSession() async {
     try {
       final session = await localDataSource.getSession();
       return Right(session);
@@ -79,10 +76,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> saveSession(AuthSession session) async {
+  Future<Either<Failure, void>> saveSession(Session session) async {
     try {
-      final sessionModel = AuthSessionModel.fromDomain(session);
-      await localDataSource.saveSession(sessionModel);
+      // final sessionModel = AuthSessionModel.fromDomain(session);
+      await localDataSource.saveSession(session);
       return const Right(null);
     } catch (e) {
       return Left(CacheFailure(e.toString()));
@@ -100,7 +97,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, AuthSession>> refreshSession() async {
+  Future<Either<Failure, Session>> refreshSession() async {
     try {
       final session = await remoteDataSource.refreshSession();
       return Right(session);
@@ -116,25 +113,6 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await remoteDataSource.resetPassword(email);
       return const Right(null);
-    } on AuthException catch (e) {
-      return Left(AuthFailure(e.message, code: e.statusCode));
-    } catch (e) {
-      return Left(UnknownFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, User>> updateProfile({
-    String? fullName,
-    String? avatarUrl,
-  }) async {
-    try {
-      final userModel = await remoteDataSource.updateProfile(
-        fullName: fullName,
-        avatarUrl: avatarUrl,
-      );
-      // UserModel extends User, so it can be returned directly
-      return Right(userModel);
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message, code: e.statusCode));
     } catch (e) {

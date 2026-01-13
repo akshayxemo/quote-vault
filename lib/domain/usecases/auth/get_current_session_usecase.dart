@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:quote_vault/domain/entities/auth_session.dart';
-import 'package:quote_vault/domain/repositories/auth_repository.dart';
+import 'package:quote_vault/domain/repositories/auth/auth_repository.dart';
 import 'package:quote_vault/core/error/failures.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Use case for getting current session
 class GetCurrentSessionUseCase {
@@ -9,7 +9,7 @@ class GetCurrentSessionUseCase {
 
   GetCurrentSessionUseCase(this.repository);
 
-  Future<Either<Failure, AuthSession?>> call() async {
+  Future<Either<Failure, Session?>> call() async {
     return await repository.getCurrentSession();
   }
 }

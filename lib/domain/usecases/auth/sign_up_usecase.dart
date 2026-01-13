@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quote_vault/domain/entities/auth_session.dart';
-import 'package:quote_vault/domain/repositories/auth_repository.dart';
+import 'package:quote_vault/domain/repositories/auth/auth_repository.dart';
 import 'package:quote_vault/core/error/failures.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Use case for user sign up
 class SignUpUseCase {
@@ -10,7 +10,7 @@ class SignUpUseCase {
 
   SignUpUseCase(this.repository);
 
-  Future<Either<Failure, AuthSession>> call(SignUpParams params) async {
+  Future<Either<Failure, Session>> call(SignUpParams params) async {
     // Validate input
     if (params.email.isEmpty) {
       return const Left(ValidationFailure('Email is required'));

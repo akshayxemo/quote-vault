@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:quote_vault/data/models/auth_session_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Local data source for authentication session storage
 abstract class AuthLocalDataSource {
-  Future<AuthSessionModel?> getSession();
-  Future<void> saveSession(AuthSessionModel session);
+  Future<Session?> getSession();
+  Future<void> saveSession(Session session);
   Future<void> clearSession();
 }
 
@@ -16,16 +16,16 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   AuthLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<AuthSessionModel?> getSession() async {
+  Future<Session?> getSession() async {
     try {
       final sessionJson = sharedPreferences.getString(_sessionKey);
       if (sessionJson == null) return null;
 
       final sessionMap = json.decode(sessionJson) as Map<String, dynamic>;
-      final session = AuthSessionModel.fromJson(sessionMap);
+      final session = Session.fromJson(sessionMap);
 
       // Check if session is expired
-      if (session.isExpired) {
+      if (session!.isExpired) {
         await clearSession();
         return null;
       }
@@ -39,7 +39,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<void> saveSession(AuthSessionModel session) async {
+  Future<void> saveSession(Session session) async {
     try {
       final sessionJson = json.encode(session.toJson());
       await sharedPreferences.setString(_sessionKey, sessionJson);

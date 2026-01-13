@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:quote_vault/domain/entities/auth_session.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Base class for authentication states
 abstract class AuthState extends Equatable {
@@ -21,7 +21,7 @@ class AuthLoading extends AuthState {
 
 /// Authenticated state
 class AuthAuthenticated extends AuthState {
-  final AuthSession session;
+  final Session session;
 
   const AuthAuthenticated({required this.session});
 

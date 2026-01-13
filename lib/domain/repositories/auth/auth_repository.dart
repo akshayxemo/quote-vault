@@ -1,19 +1,18 @@
 import 'package:dartz/dartz.dart';
-import 'package:quote_vault/domain/entities/user.dart';
-import 'package:quote_vault/domain/entities/auth_session.dart';
 import 'package:quote_vault/core/error/failures.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Abstract repository for authentication operations
 abstract class AuthRepository {
   /// Sign up with email and password
-  Future<Either<Failure, AuthSession>> signUp({
+  Future<Either<Failure, Session>> signUp({
     required String email,
     required String password,
     String? fullName,
   });
 
   /// Sign in with email and password
-  Future<Either<Failure, AuthSession>> signIn({
+  Future<Either<Failure, Session>> signIn({
     required String email,
     required String password,
   });
@@ -22,23 +21,17 @@ abstract class AuthRepository {
   Future<Either<Failure, void>> signOut();
 
   /// Get current session from local storage
-  Future<Either<Failure, AuthSession?>> getCurrentSession();
+  Future<Either<Failure, Session?>> getCurrentSession();
 
   /// Save session to local storage
-  Future<Either<Failure, void>> saveSession(AuthSession session);
+  Future<Either<Failure, void>> saveSession(Session session);
 
   /// Clear session from local storage
   Future<Either<Failure, void>> clearSession();
 
   /// Refresh session token
-  Future<Either<Failure, AuthSession>> refreshSession();
+  Future<Either<Failure, Session>> refreshSession();
 
   /// Reset password
   Future<Either<Failure, void>> resetPassword(String email);
-
-  /// Update user profile
-  Future<Either<Failure, User>> updateProfile({
-    String? fullName,
-    String? avatarUrl,
-  });
 }
