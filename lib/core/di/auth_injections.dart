@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:quote_vault/domain/usecases/auth/sign_in_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -42,12 +43,14 @@ Future<void> authInit() async {
 
   // Use cases
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
+  sl.registerLazySingleton(() => SignInUsecase(sl()));
   sl.registerLazySingleton(() => GetCurrentSessionUseCase(sl()));
 
   // BLoC
   sl.registerFactory(
     () => AuthBloc(
       signUpUseCase: sl(),
+      signInUseCase: sl(),
       getCurrentSessionUseCase: sl(),
       authRepository: sl(),
     ),

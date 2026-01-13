@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quote_vault/presentation/screens/auth/signin_screen.dart';
 import 'package:quote_vault/presentation/screens/splash/splash_screen.dart';
 import 'package:quote_vault/presentation/screens/home_screen.dart';
 import 'package:quote_vault/presentation/screens/theme_demo_screen.dart';
@@ -36,12 +37,11 @@ class AppRoutes {
         name: 'signup',
         builder: (context, state) => const SignUpScreen(),
       ),
-      // TODO: Add SignInScreen
-      // GoRoute(
-      //   path: signIn,
-      //   name: 'signin',
-      //   builder: (context, state) => const SignInScreen(),
-      // ),
+      GoRoute(
+        path: signIn,
+        name: 'signin',
+        builder: (context, state) => const SignInScreen(),
+      ),
     ],
   );
 

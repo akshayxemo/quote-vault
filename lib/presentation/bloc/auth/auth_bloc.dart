@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quote_vault/domain/usecases/auth/sign_in_usecase.dart';
 import 'package:quote_vault/domain/usecases/auth/sign_up_usecase.dart';
 import 'package:quote_vault/domain/usecases/auth/get_current_session_usecase.dart';
 import 'package:quote_vault/domain/repositories/auth/auth_repository.dart';
@@ -7,11 +8,13 @@ import 'package:quote_vault/presentation/bloc/auth/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpUseCase signUpUseCase;
+  final SignInUsecase signInUseCase;
   final GetCurrentSessionUseCase getCurrentSessionUseCase;
   final AuthRepository authRepository;
 
   AuthBloc({
     required this.signUpUseCase,
+    required this.signInUseCase,
     required this.getCurrentSessionUseCase,
     required this.authRepository,
   }) : super(const AuthInitial()) {
@@ -43,21 +46,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignIn(SignInEvent event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
 
-    final result = await authRepository.signIn(
+    final params = SignInParams(
       email: event.email,
       password: event.password,
     );
 
+    final result = await signInUseCase(params);
+
     result.fold(
       (failure) => emit(AuthError(message: failure.message, code: failure.code)),
-      (session) async {
-        // Save session locally
-        final saveResult = await authRepository.saveSession(session);
-        saveResult.fold(
-          (failure) => emit(AuthError(message: failure.message, code: failure.code)),
-          (_) => emit(AuthAuthenticated(session: session)),
-        );
-      },
+      (session) => emit(AuthAuthenticated(session: session))
     );
   }
 
