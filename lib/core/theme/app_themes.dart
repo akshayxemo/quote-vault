@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
-import 'text_theme_extension.dart';
+import 'package:quote_vault/core/theme/app_colors.dart';
+import 'package:quote_vault/core/theme/text_theme_extension.dart';
 
 /// Theme configurations for the Quote Vault app
 class AppThemes {

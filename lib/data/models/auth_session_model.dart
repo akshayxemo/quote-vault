@@ -1,5 +1,5 @@
-import '../../domain/entities/auth_session.dart';
-import 'user_model.dart';
+import 'package:quote_vault/domain/entities/auth_session.dart';
+import 'package:quote_vault/data/models/user_model.dart';
 
 /// Auth session data model for JSON serialization
 class AuthSessionModel extends AuthSession {

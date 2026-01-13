@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/theme/theme_provider.dart';
-import '../../core/constants/app_constants.dart';
-import '../widgets/common/custom_card.dart';
-import '../widgets/common/theme_preview_card.dart';
-import '../widgets/common/themed_text.dart';
+import 'package:quote_vault/core/theme/theme_provider.dart';
+import 'package:quote_vault/core/constants/app_constants.dart';
+import 'package:quote_vault/presentation/widgets/common/custom_card.dart';
+import 'package:quote_vault/presentation/widgets/common/theme_preview_card.dart';
+import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 
 class ThemeDemoScreen extends StatelessWidget {
   const ThemeDemoScreen({super.key});

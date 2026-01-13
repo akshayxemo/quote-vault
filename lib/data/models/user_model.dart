@@ -1,4 +1,4 @@
-import '../../domain/entities/user.dart';
+import 'package:quote_vault/domain/entities/user.dart';
 
 /// User data model for JSON serialization
 class UserModel extends User {

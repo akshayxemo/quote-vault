@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_constants.dart';
+import 'package:quote_vault/core/constants/app_constants.dart';
 
 class AuthButton extends StatelessWidget {
   final String text;

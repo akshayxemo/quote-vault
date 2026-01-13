@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_themes.dart';
+import 'package:quote_vault/core/theme/app_themes.dart';
 
 /// Enum for available theme types
 enum ThemeType {

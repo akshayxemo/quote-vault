@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
-import '../../domain/entities/auth_session.dart';
-import '../../domain/entities/user.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../../core/error/failures.dart';
-import '../datasources/auth_remote_datasource.dart';
-import '../datasources/auth_local_datasource.dart';
-import '../models/auth_session_model.dart';
+import 'package:quote_vault/domain/entities/auth_session.dart';
+import 'package:quote_vault/domain/entities/user.dart';
+import 'package:quote_vault/domain/repositories/auth_repository.dart';
+import 'package:quote_vault/core/error/failures.dart';
+import 'package:quote_vault/data/datasources/auth_remote_datasource.dart';
+import 'package:quote_vault/data/datasources/auth_local_datasource.dart';
+import 'package:quote_vault/data/models/auth_session_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;

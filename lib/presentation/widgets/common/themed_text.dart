@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/text_theme_extension.dart';
+import 'package:quote_vault/core/theme/text_theme_extension.dart';
 
 /// Widget that provides easy access to themed text styles
 class ThemedText extends StatelessWidget {

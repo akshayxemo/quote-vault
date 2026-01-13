@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quote_vault/core/constants/app_constants.dart';
+import 'package:quote_vault/core/theme/text_theme_extension.dart';
 import 'package:quote_vault/core/theme/app_colors.dart';
-import '../../../core/constants/app_constants.dart';
-import '../../../core/theme/text_theme_extension.dart';
-import '../../widgets/common/themed_text.dart';
+import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

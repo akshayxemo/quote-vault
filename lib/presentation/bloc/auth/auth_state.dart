@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../domain/entities/auth_session.dart';
+import 'package:quote_vault/domain/entities/auth_session.dart';
 
 /// Base class for authentication states
 abstract class AuthState extends Equatable {

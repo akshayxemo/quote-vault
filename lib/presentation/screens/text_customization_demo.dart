@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/app_constants.dart';
-import '../widgets/common/themed_text.dart';
-import '../widgets/common/custom_card.dart';
+import 'package:quote_vault/core/constants/app_constants.dart';
+import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
+import 'package:quote_vault/presentation/widgets/common/custom_card.dart';
 
 class TextCustomizationDemo extends StatelessWidget {
   const TextCustomizationDemo({super.key});

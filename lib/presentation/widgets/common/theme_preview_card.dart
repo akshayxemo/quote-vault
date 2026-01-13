@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/theme_provider.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/constants/app_constants.dart';
+import 'package:quote_vault/core/theme/theme_provider.dart';
+import 'package:quote_vault/core/theme/app_colors.dart';
+import 'package:quote_vault/core/constants/app_constants.dart';
 
 /// Preview card showing theme colors
 class ThemePreviewCard extends StatelessWidget {

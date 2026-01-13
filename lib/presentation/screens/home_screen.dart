@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/theme_provider.dart';
-import '../../core/constants/app_constants.dart';
-import '../widgets/theme_selector_widget.dart';
-import '../widgets/common/themed_text.dart';
+import 'package:quote_vault/core/theme/theme_provider.dart';
+import 'package:quote_vault/core/constants/app_constants.dart';
+import 'package:quote_vault/presentation/widgets/theme_selector_widget.dart';
+import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

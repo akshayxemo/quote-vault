@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase show User;
-import '../models/auth_session_model.dart';
-import '../models/user_model.dart';
+import 'package:quote_vault/data/models/auth_session_model.dart';
+import 'package:quote_vault/data/models/user_model.dart';
 
 /// Remote data source for authentication using Supabase
 abstract class AuthRemoteDataSource {

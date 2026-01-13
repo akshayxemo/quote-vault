@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/auth_session_model.dart';
+import 'package:quote_vault/data/models/auth_session_model.dart';
 
 /// Local data source for authentication session storage
 abstract class AuthLocalDataSource {

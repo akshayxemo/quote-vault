@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/usecases/sign_up_usecase.dart';
-import '../../../domain/usecases/get_current_session_usecase.dart';
-import '../../../domain/repositories/auth_repository.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
+import 'package:quote_vault/domain/usecases/sign_up_usecase.dart';
+import 'package:quote_vault/domain/usecases/get_current_session_usecase.dart';
+import 'package:quote_vault/domain/repositories/auth_repository.dart';
+import 'package:quote_vault/presentation/bloc/auth/auth_event.dart';
+import 'package:quote_vault/presentation/bloc/auth/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpUseCase signUpUseCase;

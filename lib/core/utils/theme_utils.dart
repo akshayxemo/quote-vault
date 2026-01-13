@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/theme_provider.dart';
+import 'package:quote_vault/core/theme/theme_provider.dart';
 
 /// Utility functions for theme-related operations
 class ThemeUtils {

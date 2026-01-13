@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import 'package:quote_vault/core/theme/app_colors.dart';
 
 /// Custom text theme extension for dynamic text colors
 @immutable

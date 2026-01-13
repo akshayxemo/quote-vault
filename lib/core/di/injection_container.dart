@@ -3,17 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Domain
-import '../../domain/repositories/auth_repository.dart';
-import '../../domain/usecases/sign_up_usecase.dart';
-import '../../domain/usecases/get_current_session_usecase.dart';
+import 'package:quote_vault/domain/repositories/auth_repository.dart';
+import 'package:quote_vault/domain/usecases/sign_up_usecase.dart';
+import 'package:quote_vault/domain/usecases/get_current_session_usecase.dart';
 
 // Data
-import '../../data/repositories/auth_repository_impl.dart';
-import '../../data/datasources/auth_remote_datasource.dart';
-import '../../data/datasources/auth_local_datasource.dart';
+import 'package:quote_vault/data/repositories/auth_repository_impl.dart';
+import 'package:quote_vault/data/datasources/auth_remote_datasource.dart';
+import 'package:quote_vault/data/datasources/auth_local_datasource.dart';
 
 // Presentation
-import '../../presentation/bloc/auth/auth_bloc.dart';
+import 'package:quote_vault/presentation/bloc/auth/auth_bloc.dart';
 
 final sl = GetIt.instance;
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/theme/theme_provider.dart';
-import '../../core/constants/app_constants.dart';
+import 'package:quote_vault/core/theme/theme_provider.dart';
+import 'package:quote_vault/core/constants/app_constants.dart';
 
 class ThemeSelectorWidget extends StatelessWidget {
   const ThemeSelectorWidget({super.key});
