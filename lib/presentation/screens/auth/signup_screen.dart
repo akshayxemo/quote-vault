@@ -23,7 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _fullNameController = TextEditingController();
-  
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -66,17 +66,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: AppConstants.extraLargeSpacing),
-                
+
                 // Header
                 _buildHeader(),
-                
+
                 const SizedBox(height: AppConstants.extraLargeSpacing),
-                
+
                 // Sign Up Form
                 _buildSignUpForm(),
-                
+
                 const SizedBox(height: AppConstants.largeSpacing),
-                
+
                 // Sign In Link
                 _buildSignInLink(),
               ],
@@ -91,38 +91,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Column(
       children: [
         // App Logo/Icon
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
-                blurRadius: 15,
-                offset: const Offset(0, 5),
-              ),
-            ],
-          ),
-          child: Icon(
-            Icons.format_quote,
-            size: 40,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ),
-        
+        Image.asset("assets/images/logo.png", height: 70, width: 70),
+
         const SizedBox(height: AppConstants.mediumSpacing),
-        
+
         ThemedText.heading(
           'Create Account',
           fontSize: 28,
           fontWeight: FontWeight.bold,
           textAlign: TextAlign.center,
         ),
-        
+
         const SizedBox(height: AppConstants.smallSpacing),
-        
+
         ThemedText.subText(
           'Join Quote Vault and start collecting wisdom',
           textAlign: TextAlign.center,
@@ -133,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _buildSignUpForm() {
-    return CustomCard(
+    return Padding(
       padding: const EdgeInsets.all(AppConstants.largeSpacing),
       child: Form(
         key: _formKey,
@@ -149,9 +130,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               textInputAction: TextInputAction.next,
               validator: null, // Optional field
             ),
-            
+
             const SizedBox(height: AppConstants.mediumSpacing),
-            
+
             // Email Field
             AuthTextField(
               controller: _emailController,
@@ -162,9 +143,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               textInputAction: TextInputAction.next,
               validator: _validateEmail,
             ),
-            
+
             const SizedBox(height: AppConstants.mediumSpacing),
-            
+
             // Password Field
             AuthTextField(
               controller: _passwordController,
@@ -185,9 +166,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               validator: _validatePassword,
             ),
-            
+
             const SizedBox(height: AppConstants.mediumSpacing),
-            
+
             // Confirm Password Field
             AuthTextField(
               controller: _confirmPasswordController,
@@ -198,7 +179,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               textInputAction: TextInputAction.done,
               suffixIcon: IconButton(
                 icon: Icon(
-                  _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                  _obscureConfirmPassword
+                      ? Icons.visibility
+                      : Icons.visibility_off,
                 ),
                 onPressed: () {
                   setState(() {
@@ -208,9 +191,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               validator: _validateConfirmPassword,
             ),
-            
+
             const SizedBox(height: AppConstants.largeSpacing),
-            
+
             // Sign Up Button
             BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
@@ -248,12 +231,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     }
-    
-    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
     if (!emailRegex.hasMatch(value)) {
       return 'Please enter a valid email';
     }
-    
+
     return null;
   }
 
@@ -261,23 +246,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     }
-    
+
     if (value.length < 8) {
       return 'Password must be at least 8 characters';
     }
-    
+
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
       return 'Password must contain at least one uppercase letter';
     }
-    
+
     if (!RegExp(r'[a-z]').hasMatch(value)) {
       return 'Password must contain at least one lowercase letter';
     }
-    
+
     if (!RegExp(r'[0-9]').hasMatch(value)) {
       return 'Password must contain at least one number';
     }
-    
+
     return null;
   }
 
@@ -285,11 +270,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (value == null || value.isEmpty) {
       return 'Please confirm your password';
     }
-    
+
     if (value != _passwordController.text) {
       return 'Passwords do not match';
     }
-    
+
     return null;
   }
 
@@ -300,8 +285,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text,
           confirmPassword: _confirmPasswordController.text,
-          fullName: _fullNameController.text.trim().isEmpty 
-              ? null 
+          fullName: _fullNameController.text.trim().isEmpty
+              ? null
               : _fullNameController.text.trim(),
         ),
       );

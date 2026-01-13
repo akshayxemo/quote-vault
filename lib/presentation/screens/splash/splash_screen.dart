@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_vault/core/constants/app_constants.dart';
 import 'package:quote_vault/core/theme/text_theme_extension.dart';
 import 'package:quote_vault/core/theme/app_colors.dart';
+import 'package:quote_vault/presentation/bloc/auth/auth_bloc.dart';
+import 'package:quote_vault/presentation/bloc/auth/auth_state.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,12 +20,13 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
+  bool _hasNavigated = false;
 
   @override
   void initState() {
     super.initState();
     _initializeAnimations();
-    _navigateToHome();
+    _startMinimumSplashTime();
   }
 
   void _initializeAnimations() {
@@ -50,9 +54,19 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
   }
 
-  Future<void> _navigateToHome() async {
+  Future<void> _startMinimumSplashTime() async {
+    // Ensure splash screen shows for at least 3 seconds
     await Future.delayed(const Duration(seconds: 3));
-    if (mounted) {
+    // The BlocListener will handle navigation based on auth state
+  }
+
+  void _navigateBasedOnAuthState(AuthState state) {
+    if (_hasNavigated || !mounted) return;
+    
+    _hasNavigated = true;
+    if (state is AuthAuthenticated) {
+      context.go('/home');
+    } else if (state is AuthUnauthenticated) {
       context.go('/signin');
     }
   }
@@ -65,7 +79,16 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthAuthenticated) {
+          _navigateBasedOnAuthState(state);
+        } else if (state is AuthUnauthenticated) {
+          _navigateBasedOnAuthState(state);
+        }
+        // AuthLoading and AuthInitial states will keep showing splash screen
+      },
+      child: Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         decoration: BoxDecoration(
@@ -169,6 +192,7 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         ),
       ),
+    ),
     );
   }
 }
