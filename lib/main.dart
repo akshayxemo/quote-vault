@@ -6,7 +6,9 @@ import 'package:quote_vault/core/constants/app_constants.dart';
 import 'package:quote_vault/app/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/di/injection_container.dart' as di;
+import 'core/di/auth_injections.dart';
 import 'presentation/bloc/auth/auth_bloc.dart';
+import 'presentation/bloc/auth/auth_event.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        BlocProvider(create: (context) => di.sl<AuthBloc>()),
+        BlocProvider<AuthBloc>(
+          create: (_) => sl<AuthBloc>()
+            ..add(const CheckSessionEvent()),
+        ),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
