@@ -21,6 +21,8 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
   bool _hasNavigated = false;
+  bool _minimumTimeCompleted = false;
+  AuthState? _finalAuthState;
 
   @override
   void initState() {
@@ -57,17 +59,31 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _startMinimumSplashTime() async {
     // Ensure splash screen shows for at least 3 seconds
     await Future.delayed(const Duration(seconds: 3));
-    // The BlocListener will handle navigation based on auth state
+    _minimumTimeCompleted = true;
+    _checkAndNavigate();
   }
 
-  void _navigateBasedOnAuthState(AuthState state) {
+  void _onAuthStateChanged(AuthState state) {
+    if (state is AuthAuthenticated || state is AuthUnauthenticated) {
+      _finalAuthState = state;
+      _checkAndNavigate();
+    }
+  }
+
+  void _checkAndNavigate() {
     if (_hasNavigated || !mounted) return;
     
-    _hasNavigated = true;
-    if (state is AuthAuthenticated) {
-      context.go('/home');
-    } else if (state is AuthUnauthenticated) {
-      context.go('/signin');
+    // Only navigate if both conditions are met:
+    // 1. Minimum time has passed
+    // 2. We have a final auth state (authenticated or unauthenticated)
+    if (_minimumTimeCompleted && _finalAuthState != null) {
+      _hasNavigated = true;
+      
+      if (_finalAuthState is AuthAuthenticated) {
+        context.go('/home');
+      } else if (_finalAuthState is AuthUnauthenticated) {
+        context.go('/signin');
+      }
     }
   }
 
@@ -81,12 +97,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthAuthenticated) {
-          _navigateBasedOnAuthState(state);
-        } else if (state is AuthUnauthenticated) {
-          _navigateBasedOnAuthState(state);
-        }
-        // AuthLoading and AuthInitial states will keep showing splash screen
+        _onAuthStateChanged(state);
       },
       child: Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
