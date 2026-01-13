@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/theme_provider.dart';
 import '../../core/constants/app_constants.dart';
 import '../widgets/theme_selector_widget.dart';
-import 'theme_demo_screen.dart';
+import '../widgets/common/themed_text.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,22 +48,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(AppConstants.largeSpacing),
                 child: Column(
                   children: [
-                    Text(
+                    ThemedText.heading(
                       'Current Theme: ${themeProvider.themeName}',
-                      style: Theme.of(context).textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppConstants.mediumSpacing),
-                    const Text(
+                    ThemedText.body(
                       'You have pushed the button this many times:',
-                      style: TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: AppConstants.smallSpacing),
-                    Text(
+                    ThemedText.accent(
                       '$_counter',
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                     ),
                   ],
                 ),
@@ -76,14 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: AppConstants.mediumSpacing),
             OutlinedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ThemeDemoScreen(),
-                  ),
-                );
+                context.push('/theme-demo');
               },
               child: const Text('View Theme Demo'),
+            ),
+            const SizedBox(height: AppConstants.mediumSpacing),
+            ElevatedButton(
+              onPressed: () {
+                context.push('/signup');
+              },
+              child: const Text('Sign Up'),
             ),
           ],
         ),

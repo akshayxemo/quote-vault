@@ -4,6 +4,7 @@ import '../../core/theme/theme_provider.dart';
 import '../../core/constants/app_constants.dart';
 import '../widgets/common/custom_card.dart';
 import '../widgets/common/theme_preview_card.dart';
+import '../widgets/common/themed_text.dart';
 
 class ThemeDemoScreen extends StatelessWidget {
   const ThemeDemoScreen({super.key});
@@ -22,18 +23,17 @@ class ThemeDemoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            ThemedText.heading(
               'Current Theme: ${themeProvider.themeName}',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              fontWeight: FontWeight.bold,
             ),
             const SizedBox(height: AppConstants.largeSpacing),
             
             // Theme Selection Grid
-            Text(
+            ThemedText.subText(
               'Available Themes',
-              style: Theme.of(context).textTheme.titleLarge,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
             ),
             const SizedBox(height: AppConstants.mediumSpacing),
             GridView.builder(
@@ -59,27 +59,53 @@ class ThemeDemoScreen extends StatelessWidget {
             const SizedBox(height: AppConstants.largeSpacing),
             
             // UI Components Demo
-            Text(
+            ThemedText.subText(
               'UI Components',
-              style: Theme.of(context).textTheme.titleLarge,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
             ),
             const SizedBox(height: AppConstants.mediumSpacing),
+            
+            // Text Theme Showcase
+            CustomCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ThemedText.heading(
+                    'Text Theme Showcase',
+                    fontWeight: FontWeight.bold,
+                  ),
+                  const SizedBox(height: AppConstants.mediumSpacing),
+                  
+                  ThemedText.heading('Heading Text'),
+                  const SizedBox(height: AppConstants.smallSpacing),
+                  
+                  ThemedText.subText('Sub Text - Secondary information'),
+                  const SizedBox(height: AppConstants.smallSpacing),
+                  
+                  ThemedText.accent('Accent Text - Highlights and CTAs'),
+                  const SizedBox(height: AppConstants.smallSpacing),
+                  
+                  ThemedText.body('Body Text - Main content and paragraphs'),
+                  const SizedBox(height: AppConstants.smallSpacing),
+                  
+                  ThemedText.caption('Caption Text - Small details and metadata'),
+                ],
+              ),
+            ),
             
             // Cards Demo
             CustomCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  ThemedText.heading(
                     'Sample Card',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: AppConstants.smallSpacing),
-                  Text(
+                  ThemedText.body(
                     'This is a sample card showing how the current theme affects the appearance of UI components.',
-                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -112,30 +138,30 @@ class ThemeDemoScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  ThemedText.heading(
                     'Typography Showcase',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    fontWeight: FontWeight.bold,
                   ),
                   const SizedBox(height: AppConstants.smallSpacing),
-                  Text(
+                  ThemedText.subText(
                     'Title Large',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
                   ),
-                  Text(
+                  ThemedText.subText(
                     'Title Medium',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
                   ),
-                  Text(
+                  ThemedText.body(
                     'Body Large - This is how regular text appears in the current theme.',
-                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  Text(
+                  ThemedText.body(
                     'Body Medium - Secondary text content.',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    fontSize: 14,
                   ),
-                  Text(
+                  ThemedText.caption(
                     'Body Small - Caption or helper text.',
-                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),

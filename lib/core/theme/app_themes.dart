@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+import 'text_theme_extension.dart';
 
 /// Theme configurations for the Quote Vault app
 class AppThemes {
@@ -17,6 +18,8 @@ class AppThemes {
         onSurface: AppColors.minimalistCharcoal,
         error: AppColors.error,
         onError: Colors.white,
+        tertiary: AppColors.minimalistAccent,
+        onTertiary: AppColors.minimalistCream,
       ),
       scaffoldBackgroundColor: AppColors.minimalistCream,
       appBarTheme: AppBarTheme(
@@ -41,6 +44,10 @@ class AppThemes {
           ),
         ),
       ),
+      textTheme: _buildTextTheme(AppTextColors.minimalistWarm),
+      extensions: const [
+        AppTextColors.minimalistWarm,
+      ],
     );
   }
 
@@ -58,6 +65,8 @@ class AppThemes {
         onSurface: AppColors.midnightSilver,
         error: AppColors.error,
         onError: Colors.white,
+        tertiary: AppColors.midnightAccent,
+        onTertiary: AppColors.midnightNavy,
       ),
       scaffoldBackgroundColor: AppColors.midnightNavy,
       appBarTheme: AppBarTheme(
@@ -82,6 +91,10 @@ class AppThemes {
           ),
         ),
       ),
+      textTheme: _buildTextTheme(AppTextColors.deepMidnight),
+      extensions: const [
+        AppTextColors.deepMidnight,
+      ],
     );
   }
 
@@ -99,6 +112,8 @@ class AppThemes {
         onSurface: AppColors.deepForest,
         error: AppColors.error,
         onError: Colors.white,
+        tertiary: AppColors.sageAccent,
+        onTertiary: AppColors.sageGreen,
       ),
       scaffoldBackgroundColor: AppColors.sageGreen,
       appBarTheme: AppBarTheme(
@@ -123,6 +138,10 @@ class AppThemes {
           ),
         ),
       ),
+      textTheme: _buildTextTheme(AppTextColors.earthySage),
+      extensions: const [
+        AppTextColors.earthySage,
+      ],
     );
   }
 
@@ -140,6 +159,8 @@ class AppThemes {
         onSurface: AppColors.richUmber,
         error: AppColors.error,
         onError: Colors.white,
+        tertiary: AppColors.terracottaAccent,
+        onTertiary: AppColors.dustyRose,
       ),
       scaffoldBackgroundColor: AppColors.dustyRose,
       appBarTheme: AppBarTheme(
@@ -163,6 +184,81 @@ class AppThemes {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
+      ),
+      textTheme: _buildTextTheme(AppTextColors.softTerracotta),
+      extensions: const [
+        AppTextColors.softTerracotta,
+      ],
+    );
+  }
+
+  /// Helper method to build text theme with custom colors
+  static TextTheme _buildTextTheme(AppTextColors textColors) {
+    return TextTheme(
+      // Display styles (largest)
+      displayLarge: TextStyle(
+        color: textColors.headingColor,
+        fontWeight: FontWeight.bold,
+      ),
+      displayMedium: TextStyle(
+        color: textColors.headingColor,
+        fontWeight: FontWeight.bold,
+      ),
+      displaySmall: TextStyle(
+        color: textColors.headingColor,
+        fontWeight: FontWeight.w600,
+      ),
+      
+      // Headline styles
+      headlineLarge: TextStyle(
+        color: textColors.headingColor,
+        fontWeight: FontWeight.bold,
+      ),
+      headlineMedium: TextStyle(
+        color: textColors.headingColor,
+        fontWeight: FontWeight.w600,
+      ),
+      headlineSmall: TextStyle(
+        color: textColors.headingColor,
+        fontWeight: FontWeight.w600,
+      ),
+      
+      // Title styles
+      titleLarge: TextStyle(
+        color: textColors.headingColor,
+        fontWeight: FontWeight.w500,
+      ),
+      titleMedium: TextStyle(
+        color: textColors.subTextColor,
+        fontWeight: FontWeight.w500,
+      ),
+      titleSmall: TextStyle(
+        color: textColors.subTextColor,
+        fontWeight: FontWeight.w500,
+      ),
+      
+      // Body styles
+      bodyLarge: TextStyle(
+        color: textColors.bodyTextColor,
+      ),
+      bodyMedium: TextStyle(
+        color: textColors.bodyTextColor,
+      ),
+      bodySmall: TextStyle(
+        color: textColors.subTextColor,
+      ),
+      
+      // Label styles
+      labelLarge: TextStyle(
+        color: textColors.accentColor,
+        fontWeight: FontWeight.w500,
+      ),
+      labelMedium: TextStyle(
+        color: textColors.accentColor,
+        fontWeight: FontWeight.w500,
+      ),
+      labelSmall: TextStyle(
+        color: textColors.captionColor,
       ),
     );
   }
