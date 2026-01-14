@@ -6,7 +6,6 @@ import 'package:quote_vault/presentation/screens/home/home_screen.dart';
 import 'package:quote_vault/presentation/screens/splash/splash_screen.dart';
 import 'package:quote_vault/presentation/screens/theme_demo_screen.dart';
 import 'package:quote_vault/presentation/screens/auth/signup_screen.dart';
-import 'package:quote_vault/presentation/screens/quotes/quotes_screen.dart';
 import 'package:quote_vault/presentation/screens/favorites/favorites_screen.dart';
 import 'package:quote_vault/presentation/screens/search/search_screen.dart';
 import 'package:quote_vault/presentation/screens/profile/profile_screen.dart';
@@ -52,11 +51,11 @@ class AppRoutes {
             name: 'home',
             builder: (context, state) => const HomeScreen(),
           ),
-          GoRoute(
-            path: collections,
-            name: 'collections',
-            builder: (context, state) => const QuotesScreen(),
-          ),
+          // GoRoute(
+          //   path: collections,
+          //   name: 'collections',
+          //   builder: (context, state) => const QuotesScreen(),
+          // ),
           GoRoute(
             path: favorites,
             name: 'favorites',

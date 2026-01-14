@@ -46,7 +46,7 @@ class BottomNavBar extends StatelessWidget {
                 icon: Icons.collections_bookmark_outlined,
                 activeIcon: Icons.collections_bookmark,
                 label: 'Collections',
-                route: '/collections',
+                route: '/home',
               ),
               _buildNavItem(
                 context: context,

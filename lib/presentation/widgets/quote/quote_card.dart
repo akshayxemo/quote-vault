@@ -172,7 +172,7 @@ class _QuoteCardState extends State<QuoteCard> {
                           children: [
                             Icon(
                               Icons.preview,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.tertiary,
                               size: 20,
                             ),
                             const SizedBox(width: 8),
@@ -414,7 +414,9 @@ class _QuoteCardState extends State<QuoteCard> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                color: Theme.of(
+                  context,
+                ).colorScheme.tertiary.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
