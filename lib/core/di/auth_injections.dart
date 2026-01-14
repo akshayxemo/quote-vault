@@ -16,9 +16,7 @@ import 'package:quote_vault/data/datasources/auth/auth_local_datasource.dart';
 // Presentation
 import 'package:quote_vault/presentation/bloc/auth/auth_bloc.dart';
 
-final sl = GetIt.instance;
-
-Future<void> authInit() async {
+Future<void> authInit(GetIt sl) async {
   // External dependencies
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);

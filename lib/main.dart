@@ -8,7 +8,6 @@ import 'package:quote_vault/app/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/di/injection_container.dart' as di;
-import 'core/di/auth_injections.dart';
 import 'presentation/bloc/auth/auth_bloc.dart';
 import 'presentation/bloc/auth/auth_event.dart';
 
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => TextSizeProvider(prefs)),
         BlocProvider<AuthBloc>(
-          create: (_) => sl<AuthBloc>()
+          create: (_) => di.sl<AuthBloc>()
             ..add(const CheckSessionEvent()),
         ),
       ],

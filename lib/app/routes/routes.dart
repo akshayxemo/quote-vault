@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_vault/presentation/screens/auth/signin_screen.dart';
+import 'package:quote_vault/presentation/screens/home/home_screen.dart';
 import 'package:quote_vault/presentation/screens/splash/splash_screen.dart';
-import 'package:quote_vault/presentation/screens/home_screen.dart';
 import 'package:quote_vault/presentation/screens/theme_demo_screen.dart';
 import 'package:quote_vault/presentation/screens/auth/signup_screen.dart';
 import 'package:quote_vault/presentation/screens/quotes/quotes_screen.dart';
