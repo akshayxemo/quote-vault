@@ -1,5 +1,4 @@
 
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_vault/presentation/screens/auth/signin_screen.dart';
 import 'package:quote_vault/presentation/screens/home/home_screen.dart';
