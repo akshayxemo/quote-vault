@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:quote_vault/core/constants/app_constants.dart';
-import 'package:quote_vault/core/theme/theme_provider.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_event.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_state.dart';
@@ -34,7 +32,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocListener<AuthBloc, AuthState>(

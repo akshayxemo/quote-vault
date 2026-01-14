@@ -51,7 +51,7 @@ class ThemeDemoScreen extends StatelessWidget {
                 return ThemePreviewCard(
                   themeType: theme,
                   isSelected: themeProvider.currentTheme == theme,
-                  onTap: () => themeProvider.setTheme(theme),
+                  onTap: () => themeProvider.setTheme(index),
                 );
               },
             ),
