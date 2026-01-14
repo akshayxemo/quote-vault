@@ -156,10 +156,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           ],
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: themeProvider.toggleTheme,
-                        child: const Text('Switch Theme'),
-                      ),
                       const Spacer(),
                       _buildSignUpLink(),
                     ],
