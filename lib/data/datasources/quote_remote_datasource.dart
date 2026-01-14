@@ -4,7 +4,7 @@ import 'package:quote_vault/presentation/bloc/search/search_event.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class QuoteRemoteDataSource {
-  Future<QuoteModel?> getQuoteOfTheDay();
+  Future<QuoteModel?> getQuoteOfTheDay({String? userId});
   Future<List<CategoryModel>> getCategories();
   Future<List<QuoteModel>> getQuotes({
     String? categoryId,
@@ -34,20 +34,28 @@ class QuoteRemoteDataSourceImpl implements QuoteRemoteDataSource {
   QuoteRemoteDataSourceImpl({required this.supabaseClient});
 
   @override
-  Future<QuoteModel?> getQuoteOfTheDay() async {
+  Future<QuoteModel?> getQuoteOfTheDay({String? userId}) async {
     try {
       final today = DateTime.now().toIso8601String().split('T')[0];
       
       final response = await supabaseClient
           .from('quote_of_the_day')
-          .select('quote_id, quotes(*)')
+          .select('quote_id, quotes(*, favorite_quotes(id, user_id))')
           .eq('date', today)
           .maybeSingle();
 
       if (response == null) return null;
 
       final quoteData = response['quotes'];
-      return QuoteModel.fromJson(quoteData);
+      
+      // Check if favorited by current user
+      bool isFavorite = false;
+      if (userId != null && quoteData['favorite_quotes'] != null) {
+        final favorites = quoteData['favorite_quotes'] as List;
+        isFavorite = favorites.any((fav) => fav['user_id'] == userId);
+      }
+
+      return QuoteModel.fromJson({...quoteData, 'is_favorite': isFavorite});
     } catch (e) {
       throw Exception('Failed to get quote of the day: $e');
     }
@@ -80,7 +88,7 @@ class QuoteRemoteDataSourceImpl implements QuoteRemoteDataSource {
       dynamic query = supabaseClient.from('quotes').select('''
         *,
         quote_categories!inner(category_id),
-        favorite_quotes(id)
+        favorite_quotes(id, user_id)
       ''');
 
       if (categoryId != null) {
@@ -98,8 +106,14 @@ class QuoteRemoteDataSourceImpl implements QuoteRemoteDataSource {
       final response = await query.order('created_at', ascending: false);
 
       return (response as List).map((json) {
-        final isFavorite = userId != null && 
-            (json['favorite_quotes'] as List).any((fav) => fav != null);
+        // Check if favorited by current user
+        bool isFavorite = false;
+        if (userId != null && json['favorite_quotes'] != null) {
+          final favorites = json['favorite_quotes'] as List;
+          isFavorite = favorites.any(
+            (fav) => fav != null && fav['user_id'] == userId,
+          );
+        }
         
         return QuoteModel.fromJson({
           ...json,
@@ -151,6 +165,8 @@ class QuoteRemoteDataSourceImpl implements QuoteRemoteDataSource {
     required String userId,
   }) async {
     try {
+      print('🔍 Checking if quote $quoteId is favorited by user $userId');
+      
       final existing = await supabaseClient
           .from('favorite_quotes')
           .select()
@@ -159,19 +175,24 @@ class QuoteRemoteDataSourceImpl implements QuoteRemoteDataSource {
           .maybeSingle();
 
       if (existing != null) {
+        print('❌ Removing from favorites (ID: ${existing['id']})');
         await supabaseClient
             .from('favorite_quotes')
             .delete()
             .eq('id', existing['id']);
+        print('✅ Successfully removed from favorites');
         return false;
       } else {
+        print('➕ Adding to favorites');
         await supabaseClient.from('favorite_quotes').insert({
           'quote_id': quoteId,
           'user_id': userId,
         });
+        print('✅ Successfully added to favorites');
         return true;
       }
     } catch (e) {
+      print('❗ Error toggling favorite: $e');
       throw Exception('Failed to toggle favorite: $e');
     }
   }

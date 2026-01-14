@@ -45,7 +45,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     try {
-      final quoteOfTheDayResult = await getQuoteOfTheDayUseCase();
+      final quoteOfTheDayResult = await getQuoteOfTheDayUseCase(
+        userId: event.userId,
+      );
       final categoriesResult = await getCategoriesUseCase();
       final quotesResult = await getQuotesUseCase(
         GetQuotesParams(

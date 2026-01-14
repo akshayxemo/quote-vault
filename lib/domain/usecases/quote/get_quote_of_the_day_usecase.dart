@@ -8,7 +8,7 @@ class GetQuoteOfTheDayUseCase {
 
   GetQuoteOfTheDayUseCase(this.repository);
 
-  Future<Either<Failure, Quote?>> call() async {
-    return await repository.getQuoteOfTheDay();
+  Future<Either<Failure, Quote?>> call({String? userId}) async {
+    return await repository.getQuoteOfTheDay(userId: userId);
   }
 }

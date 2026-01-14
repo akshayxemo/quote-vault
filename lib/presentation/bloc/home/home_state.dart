@@ -41,7 +41,7 @@ class HomeLoaded extends HomeState {
   });
 
   HomeLoaded copyWith({
-    Quote? quoteOfTheDay,
+    Object? quoteOfTheDay = const _Undefined(),
     List<Category>? categories,
     List<Quote>? quotes,
     Object? selectedCategoryId = const _Undefined(),
@@ -50,7 +50,9 @@ class HomeLoaded extends HomeState {
     String? userId,
   }) {
     return HomeLoaded(
-      quoteOfTheDay: quoteOfTheDay ?? this.quoteOfTheDay,
+      quoteOfTheDay: quoteOfTheDay == const _Undefined()
+          ? this.quoteOfTheDay
+          : quoteOfTheDay as Quote?,
       categories: categories ?? this.categories,
       quotes: quotes ?? this.quotes,
       selectedCategoryId: selectedCategoryId == const _Undefined()

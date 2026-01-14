@@ -25,7 +25,7 @@ class Quote extends Equatable {
     String? text, 
     String? author, 
     String? category, 
-    bool? isFavorite,
+    Object? isFavorite = const _Undefined(),
     DateTime? createdAt,
   }) {
     return Quote(
@@ -33,8 +33,14 @@ class Quote extends Equatable {
       text: text ?? this.text,
       author: author ?? this.author,
       category: category ?? this.category,
-      isFavorite: isFavorite ?? this.isFavorite,
+      isFavorite: isFavorite == const _Undefined()
+          ? this.isFavorite
+          : isFavorite as bool,
       createdAt: createdAt ?? this.createdAt,
     );
   }
+}
+
+class _Undefined {
+  const _Undefined();
 }

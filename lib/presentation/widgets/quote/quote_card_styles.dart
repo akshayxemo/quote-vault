@@ -114,7 +114,9 @@ class QuoteCardStyles {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Theme.of(
+                context,
+              ).colorScheme.secondary.withValues(alpha: 0.1),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -169,7 +171,9 @@ class QuoteCardStyles {
                       onPressed: onFavorite,
                       icon: Icon(
                         isFavorited ? Icons.favorite : Icons.favorite_border,
-                        color: isFavorited ? Colors.red : Colors.grey,
+                        color: isFavorited
+                            ? Theme.of(context).colorScheme.tertiary
+                            : Colors.grey,
                       ),
                     ),
                     IconButton(
@@ -286,7 +290,9 @@ class QuoteCardStyles {
               children: [
                 _buildElegantButton(
                   icon: isFavorited ? Icons.favorite : Icons.favorite_border,
-                  color: isFavorited ? Colors.red : Colors.grey,
+                  color: isFavorited
+                      ? Theme.of(context).colorScheme.tertiary
+                      : Colors.grey,
                   onPressed: onFavorite,
                 ),
                 const SizedBox(width: 20),
@@ -437,7 +443,9 @@ class QuoteCardStyles {
                           context: context,
                           icon: isFavorited ? Icons.favorite : Icons.favorite_border,
                           label: isFavorited ? 'Favorited' : 'Favorite',
-                          color: isFavorited ? Colors.red : Colors.grey,
+                          color: isFavorited
+                              ? Theme.of(context).colorScheme.tertiary
+                              : Colors.grey,
                           onPressed: onFavorite,
                         ),
                       ),

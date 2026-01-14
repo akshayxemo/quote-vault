@@ -291,12 +291,12 @@ class _CategoryChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color: isSelected
-              ? Theme.of(context).primaryColor
+              ? Theme.of(context).colorScheme.tertiary
               : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected
-                ? Theme.of(context).primaryColor
+                ? Theme.of(context).colorScheme.tertiary
                 : Theme.of(context).dividerColor,
           ),
         ),

@@ -12,9 +12,9 @@ class QuoteRepositoryImpl implements QuoteRepository {
   QuoteRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, Quote?>> getQuoteOfTheDay() async {
+  Future<Either<Failure, Quote?>> getQuoteOfTheDay({String? userId}) async {
     try {
-      final quote = await remoteDataSource.getQuoteOfTheDay();
+      final quote = await remoteDataSource.getQuoteOfTheDay(userId: userId);
       return Right(quote);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

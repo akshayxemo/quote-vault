@@ -164,96 +164,25 @@ class _SearchScreenContentState extends State<_SearchScreenContent> {
 
             // Search results
             Expanded(
-              child: BlocBuilder<SearchBloc, SearchState>(
-                builder: (context, state) {
-                  if (state is SearchInitial) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.search,
-                            size: 80,
-                            color: Colors.grey.withValues(alpha: 0.5),
-                          ),
-                          const SizedBox(height: 16),
-                          ThemedText.heading('Search Quotes', fontSize: 20),
-                          const SizedBox(height: 8),
-                          ThemedText.body(
-                            'Search through thousands of inspiring quotes',
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  if (state is SearchLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-
-                  if (state is SearchOffline) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.wifi_off,
-                            size: 64,
-                            color: Colors.grey.withValues(alpha: 0.5),
-                          ),
-                          const SizedBox(height: 16),
-                          ThemedText.heading('You are offline', fontSize: 20),
-                          const SizedBox(height: 8),
-                          ThemedText.body(
-                            'Please check your internet connection',
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 24),
-                          ElevatedButton(
-                            onPressed: _performSearch,
-                            child: const Text('Retry'),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  if (state is SearchError) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ThemedText.body('Error: ${state.message}'),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: _performSearch,
-                            child: const Text('Retry'),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  if (state is SearchLoaded) {
-                    if (state.quotes.isEmpty) {
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: BlocBuilder<SearchBloc, SearchState>(
+                  builder: (context, state) {
+                    if (state is SearchInitial) {
                       return Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.search_off,
-                              size: 64,
+                              Icons.search,
+                              size: 80,
                               color: Colors.grey.withValues(alpha: 0.5),
                             ),
                             const SizedBox(height: 16),
-                            ThemedText.heading(
-                              'No results found',
-                              fontSize: 20,
-                            ),
+                            ThemedText.heading('Search Quotes', fontSize: 20),
                             const SizedBox(height: 8),
                             ThemedText.body(
-                              'Try searching with different keywords',
+                              'Search through thousands of inspiring quotes',
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -261,41 +190,115 @@ class _SearchScreenContentState extends State<_SearchScreenContent> {
                       );
                     }
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          child: ThemedText.body(
-                            'Found ${state.quotes.length} result${state.quotes.length == 1 ? '' : 's'}',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(top: 8),
-                            itemCount: state.quotes.length,
-                            itemBuilder: (context, index) {
-                              final quote = state.quotes[index];
-                              return QuoteCard(
-                                quote: quote,
-                                style: QuoteCardStyle.defaultStyle,
-                                onFavorite: () => _handleFavorite(quote.id),
-                                isFavorited: quote.isFavorite,
-                                showCategory: true, // Show category chip
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    );
-                  }
+                    if (state is SearchLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                  return const SizedBox.shrink();
-                },
+                    if (state is SearchOffline) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.wifi_off,
+                              size: 64,
+                              color: Colors.grey.withValues(alpha: 0.5),
+                            ),
+                            const SizedBox(height: 16),
+                            ThemedText.heading('You are offline', fontSize: 20),
+                            const SizedBox(height: 8),
+                            ThemedText.body(
+                              'Please check your internet connection',
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 24),
+                            ElevatedButton(
+                              onPressed: _performSearch,
+                              child: const Text('Retry'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    if (state is SearchError) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ThemedText.body('Error: ${state.message}'),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: _performSearch,
+                              child: const Text('Retry'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    if (state is SearchLoaded) {
+                      if (state.quotes.isEmpty) {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.search_off,
+                                size: 64,
+                                color: Colors.grey.withValues(alpha: 0.5),
+                              ),
+                              const SizedBox(height: 16),
+                              ThemedText.heading(
+                                'No results found',
+                                fontSize: 20,
+                              ),
+                              const SizedBox(height: 8),
+                              ThemedText.body(
+                                'Try searching with different keywords',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            child: ThemedText.body(
+                              'Found ${state.quotes.length} result${state.quotes.length == 1 ? '' : 's'}',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              padding: const EdgeInsets.only(top: 8),
+                              itemCount: state.quotes.length,
+                              itemBuilder: (context, index) {
+                                final quote = state.quotes[index];
+                                return QuoteCard(
+                                  quote: quote,
+                                  style: QuoteCardStyle.defaultStyle,
+                                  onFavorite: () => _handleFavorite(quote.id),
+                                  isFavorited: quote.isFavorite,
+                                  showCategory: true, // Show category chip
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
+                ),
               ),
             ),
           ],
@@ -326,12 +329,12 @@ class _SearchTypeChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? Theme.of(context).primaryColor
+              ? Theme.of(context).colorScheme.tertiary
               : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected
-                ? Theme.of(context).primaryColor
+                ? Theme.of(context).colorScheme.tertiary
                 : Theme.of(context).dividerColor,
           ),
         ),
