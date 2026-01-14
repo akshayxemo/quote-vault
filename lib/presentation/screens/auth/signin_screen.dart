@@ -188,7 +188,7 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         GestureDetector(
-          onTap: () => context.go('/signup'),
+          onTap: () {},
           child: ThemedText.accent(
             "Forgot Password ?",
             fontWeight: FontWeight.w600,
