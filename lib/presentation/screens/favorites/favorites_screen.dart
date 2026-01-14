@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_state.dart' as app_auth;
 import 'package:quote_vault/presentation/bloc/favorites/favorites_bloc.dart';
@@ -102,12 +103,6 @@ class _FavoritesScreenContentState extends State<_FavoritesScreenContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: const Text('Favorites'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
       body: SafeArea(
         child: BlocBuilder<FavoritesBloc, FavoritesState>(
           builder: (context, state) {
@@ -195,28 +190,49 @@ class _FavoritesScreenContentState extends State<_FavoritesScreenContent> {
                 );
               }
 
-              return ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.only(top: 8),
-                itemCount: state.quotes.length + 1,
-                itemBuilder: (context, index) {
-                  if (index >= state.quotes.length) {
-                    return state.isLoadingMore
-                        ? const Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Center(child: CircularProgressIndicator()),
-                          )
-                        : const SizedBox.shrink();
-                  }
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8.0,
+                    ),
+                    child: Text(
+                      "Favorites",
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.only(top: 8),
+                      itemCount: state.quotes.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index >= state.quotes.length) {
+                          return state.isLoadingMore
+                              ? const Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                )
+                              : const SizedBox.shrink();
+                        }
 
-                  final quote = state.quotes[index];
-                  return QuoteCard(
-                    quote: quote,
-                    style: QuoteCardStyle.defaultStyle,
-                    onFavorite: () => _handleRemoveFavorite(quote.id),
-                    isFavorited: true,
-                  );
-                },
+                        final quote = state.quotes[index];
+                        return QuoteCard(
+                          quote: quote,
+                          style: QuoteCardStyle.defaultStyle,
+                          onFavorite: () => _handleRemoveFavorite(quote.id),
+                          isFavorited: true,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
             }
 
