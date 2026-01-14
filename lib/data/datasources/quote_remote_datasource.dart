@@ -1,5 +1,6 @@
 import 'package:quote_vault/data/models/category_model.dart';
 import 'package:quote_vault/data/models/quote_model.dart';
+import 'package:quote_vault/presentation/bloc/search/search_event.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class QuoteRemoteDataSource {
@@ -19,6 +20,11 @@ abstract class QuoteRemoteDataSource {
   Future<bool> toggleFavorite({
     required String quoteId,
     required String userId,
+  });
+  Future<List<QuoteModel>> searchQuotes({
+    required String query,
+    required SearchType searchType,
+    String? userId,
   });
 }
 
@@ -167,6 +173,56 @@ class QuoteRemoteDataSourceImpl implements QuoteRemoteDataSource {
       }
     } catch (e) {
       throw Exception('Failed to toggle favorite: $e');
+    }
+  }
+
+  @override
+  Future<List<QuoteModel>> searchQuotes({
+    required String query,
+    required SearchType searchType,
+    String? userId,
+  }) async {
+    try {
+      dynamic queryBuilder = supabaseClient.from('quotes').select('''
+        *,
+        quote_categories!inner(category_id, categories(name)),
+        favorite_quotes(id)
+      ''');
+
+      // Apply search filter based on type
+      if (searchType == SearchType.quote) {
+        queryBuilder = queryBuilder.ilike('quote', '%$query%');
+      } else {
+        queryBuilder = queryBuilder.ilike('author', '%$query%');
+      }
+
+      final response = await queryBuilder
+          .order('created_at', ascending: false)
+          .limit(50);
+
+      return (response as List).map((json) {
+        final isFavorite =
+            userId != null &&
+            (json['favorite_quotes'] as List).any((fav) => fav != null);
+
+        // Get category name from the join
+        String categoryName = '';
+        if (json['quote_categories'] != null &&
+            (json['quote_categories'] as List).isNotEmpty) {
+          final firstCategory = json['quote_categories'][0];
+          if (firstCategory['categories'] != null) {
+            categoryName = firstCategory['categories']['name'] ?? '';
+          }
+        }
+
+        return QuoteModel.fromJson({
+          ...json,
+          'is_favorite': isFavorite,
+          'category': categoryName,
+        });
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to search quotes: $e');
     }
   }
 }

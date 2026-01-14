@@ -43,18 +43,10 @@ class BottomNavBar extends StatelessWidget {
               _buildNavItem(
                 context: context,
                 index: 1,
-                icon: Icons.format_quote_outlined,
-                activeIcon: Icons.format_quote,
-                label: 'Quotes',
-                route: '/quotes',
-              ),
-              _buildNavItem(
-                context: context,
-                index: 2,
-                icon: Icons.favorite_outline,
-                activeIcon: Icons.favorite,
-                label: 'Favorites',
-                route: '/favorites',
+                icon: Icons.collections_bookmark_outlined,
+                activeIcon: Icons.collections_bookmark,
+                label: 'Collections',
+                route: '/collections',
               ),
               _buildNavItem(
                 context: context,
@@ -63,6 +55,14 @@ class BottomNavBar extends StatelessWidget {
                 activeIcon: Icons.search,
                 label: 'Search',
                 route: '/search',
+              ),
+              _buildNavItem(
+                context: context,
+                index: 2,
+                icon: Icons.favorite_outline,
+                activeIcon: Icons.favorite,
+                label: 'Favorites',
+                route: '/favorites',
               ),
               _buildNavItem(
                 context: context,

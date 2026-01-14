@@ -15,7 +15,7 @@ import 'package:quote_vault/presentation/widgets/navigation/main_shell.dart';
 class AppRoutes {
   static const String splash = '/';
   static const String home = '/home';
-  static const String quotes = '/quotes';
+  static const String collections = '/collections';
   static const String favorites = '/favorites';
   static const String search = '/search';
   static const String profile = '/profile';
@@ -53,8 +53,8 @@ class AppRoutes {
             builder: (context, state) => const HomeScreen(),
           ),
           GoRoute(
-            path: quotes,
-            name: 'quotes',
+            path: collections,
+            name: 'collections',
             builder: (context, state) => const QuotesScreen(),
           ),
           GoRoute(
@@ -87,8 +87,8 @@ class AppRoutes {
     context.go(home);
   }
 
-  static void navigateToQuotes(BuildContext context) {
-    context.go(quotes);
+  static void navigateToCollections(BuildContext context) {
+    context.go(collections);
   }
 
   static void navigateToFavorites(BuildContext context) {

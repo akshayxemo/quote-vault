@@ -4,6 +4,7 @@ import 'package:quote_vault/data/datasources/quote_remote_datasource.dart';
 import 'package:quote_vault/domain/entities/category.dart';
 import 'package:quote_vault/domain/entities/quote.dart';
 import 'package:quote_vault/domain/repositories/quote_repository.dart';
+import 'package:quote_vault/presentation/bloc/search/search_event.dart';
 
 class QuoteRepositoryImpl implements QuoteRepository {
   final QuoteRemoteDataSource remoteDataSource;
@@ -79,6 +80,24 @@ class QuoteRepositoryImpl implements QuoteRepository {
         userId: userId,
       );
       return Right(isFavorited);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Quote>>> searchQuotes({
+    required String query,
+    required SearchType searchType,
+    String? userId,
+  }) async {
+    try {
+      final quotes = await remoteDataSource.searchQuotes(
+        query: query,
+        searchType: searchType,
+        userId: userId,
+      );
+      return Right(quotes);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

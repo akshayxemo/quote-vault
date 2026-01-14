@@ -7,9 +7,11 @@ import 'package:quote_vault/domain/usecases/quote/get_categories_usecase.dart';
 import 'package:quote_vault/domain/usecases/quote/get_favorite_quotes_usecase.dart';
 import 'package:quote_vault/domain/usecases/quote/get_quote_of_the_day_usecase.dart';
 import 'package:quote_vault/domain/usecases/quote/get_quotes_usecase.dart';
+import 'package:quote_vault/domain/usecases/quote/search_quotes_usecase.dart';
 import 'package:quote_vault/domain/usecases/quote/toggle_favorite_usecase.dart';
 import 'package:quote_vault/presentation/bloc/home/home_bloc.dart';
 import 'package:quote_vault/presentation/bloc/favorites/favorites_bloc.dart';
+import 'package:quote_vault/presentation/bloc/search/search_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final sl = GetIt.instance;
@@ -38,6 +40,7 @@ Future<void> initQuoteInjections() async {
   sl.registerLazySingleton(() => GetQuotesUseCase(sl()));
   sl.registerLazySingleton(() => ToggleFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => GetFavoriteQuotesUseCase(sl()));
+  sl.registerLazySingleton(() => SearchQuotesUseCase(sl()));
 
   // Blocs
   sl.registerFactory(
@@ -56,5 +59,9 @@ Future<void> initQuoteInjections() async {
       toggleFavoriteUseCase: sl(),
       networkInfo: sl(),
     ),
+  );
+
+  sl.registerFactory(
+    () => SearchBloc(searchQuotesUseCase: sl(), networkInfo: sl()),
   );
 }

@@ -10,6 +10,7 @@ class QuoteCardStyles {
     VoidCallback? onFavorite,
     VoidCallback? onShare,
     bool isFavorited = false,
+    bool showCategory = false,
   }) {
     return Builder(
       builder: (context) {
@@ -22,6 +23,29 @@ class QuoteCardStyles {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Category chip (if category exists and showCategory is true)
+                if (showCategory && quote.category.isNotEmpty) ...[
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      quote.category,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+
                 // Quote text
                 ThemedText.body(
                   '"${quote.text}"',

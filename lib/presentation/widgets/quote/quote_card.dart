@@ -23,6 +23,7 @@ class QuoteCard extends StatefulWidget {
   final QuoteCardStyle style;
   final VoidCallback? onFavorite;
   final bool isFavorited;
+  final bool showCategory;
 
   const QuoteCard({
     super.key,
@@ -30,6 +31,7 @@ class QuoteCard extends StatefulWidget {
     this.style = QuoteCardStyle.minimal,
     this.onFavorite,
     this.isFavorited = false,
+    this.showCategory = false,
   });
 
   @override
@@ -76,6 +78,7 @@ class _QuoteCardState extends State<QuoteCard> {
           onFavorite: widget.onFavorite,
           onShare: _showShareOptions,
           isFavorited: widget.isFavorited,
+          showCategory: widget.showCategory,
         );
       case QuoteCardStyle.minimal:
         return QuoteCardStyles.minimal(
