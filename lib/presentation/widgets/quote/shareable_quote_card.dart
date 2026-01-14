@@ -110,13 +110,13 @@ class ShareableQuoteCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Theme.of(context).primaryColor.withValues(alpha: 0.1),
+            Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.5),
             Theme.of(context).cardColor,
           ],
         ),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+          color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.2),
           width: 2,
         ),
         boxShadow: [
@@ -220,8 +220,10 @@ class ShareableQuoteCard extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withValues(alpha: 0.8),
+                    Theme.of(context).colorScheme.tertiary,
+                    Theme.of(
+                      context,
+                    ).colorScheme.tertiary.withValues(alpha: 0.8),
                   ],
                 ),
                 borderRadius: const BorderRadius.only(

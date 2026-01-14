@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:quote_vault/core/theme/theme_provider.dart';
+import 'package:quote_vault/core/settings/text_size_provider.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_bloc.dart';
 import 'package:quote_vault/presentation/bloc/auth/auth_event.dart';
+import 'package:quote_vault/presentation/bloc/auth/auth_state.dart';
 import 'package:quote_vault/presentation/widgets/profile/profile_header.dart';
 import 'package:quote_vault/presentation/widgets/profile/settings_section.dart';
 import 'package:quote_vault/presentation/widgets/profile/theme_selector_modal.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -128,35 +132,45 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildTextSizeSelector(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Icon(
-            Icons.text_fields,
-            color: Theme.of(context).iconTheme.color,
-          ),
-          title: ThemedText.body('Text Size'),
-          subtitle: ThemedText.caption('Medium', fontSize: 12),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 56, vertical: 8),
-          child: Row(
-            children: [
-              ThemedText.caption('A', fontSize: 12),
-              Expanded(
-                child: Slider(
-                  value: 0.5,
-                  onChanged: (value) {
-                    // TODO: Implement text size change
-                  },
-                  activeColor: Theme.of(context).primaryColor,
-                ),
+    return Consumer<TextSizeProvider>(
+      builder: (context, textSizeProvider, child) {
+        return Column(
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.text_fields,
+                color: Theme.of(context).iconTheme.color,
               ),
-              ThemedText.caption('A', fontSize: 18),
-            ],
-          ),
-        ),
-      ],
+              title: ThemedText.body('Text Size'),
+              subtitle: ThemedText.caption(
+                textSizeProvider.getTextSizeLabel(),
+                fontSize: 12,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 56, vertical: 8),
+              child: Row(
+                children: [
+                  ThemedText.caption('A', fontSize: 12),
+                  Expanded(
+                    child: Slider(
+                      value: textSizeProvider.textSize,
+                      min: textSizeProvider.minTextSize,
+                      max: textSizeProvider.maxTextSize,
+                      divisions: 10,
+                      onChanged: (value) {
+                        textSizeProvider.setTextSize(value);
+                      },
+                      activeColor: Theme.of(context).colorScheme.tertiary,
+                    ),
+                  ),
+                  ThemedText.caption('A', fontSize: 18),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -173,7 +187,7 @@ class ProfileScreen extends StatelessWidget {
         onChanged: (value) {
           // TODO: Implement daily reminders toggle
         },
-        activeColor: Theme.of(context).primaryColor,
+        activeColor: Theme.of(context).colorScheme.tertiary,
       ),
     );
   }
@@ -279,25 +293,37 @@ class ProfileScreen extends StatelessWidget {
   void _showSignOutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: ThemedText.heading('Sign Out'),
-        content: ThemedText.body('Are you sure you want to sign out?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: ThemedText.body('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              context.read<AuthBloc>().add(const SignOutEvent());
-            },
-            child: ThemedText.body(
-              'Sign Out',
-              customColor: Colors.red,
+      builder: (dialogContext) => BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthUnauthenticated) {
+            Navigator.of(dialogContext).pop();
+            context.go('/signin');
+          } else if (state is AuthError) {
+            Navigator.of(dialogContext).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Sign out failed: ${state.message}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: AlertDialog(
+          title: ThemedText.heading('Sign Out'),
+          content: ThemedText.body('Are you sure you want to sign out?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: ThemedText.body('Cancel'),
             ),
-          ),
-        ],
+            TextButton(
+              onPressed: () {
+                context.read<AuthBloc>().add(const SignOutEvent());
+              },
+              child: ThemedText.body('Sign Out', customColor: Colors.red),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+import 'package:gal/gal.dart';
 import 'package:quote_vault/domain/entities/quote.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
 import 'package:quote_vault/presentation/widgets/quote/quote_card_styles.dart';
 import 'package:quote_vault/presentation/widgets/quote/shareable_quote_card.dart';
 
 enum QuoteCardStyle {
+  defaultStyle,
   minimal,
   elegant,
   modern,
@@ -48,6 +49,8 @@ class _QuoteCardState extends State<QuoteCard> {
 
   ShareableCardStyle _mapToShareableStyle(QuoteCardStyle style) {
     switch (style) {
+      case QuoteCardStyle.defaultStyle:
+        return ShareableCardStyle.minimal;
       case QuoteCardStyle.minimal:
         return ShareableCardStyle.minimal;
       case QuoteCardStyle.elegant:
@@ -60,13 +63,20 @@ class _QuoteCardState extends State<QuoteCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: _buildCardByStyle(),
     );
   }
 
   Widget _buildCardByStyle() {
     switch (widget.style) {
+      case QuoteCardStyle.defaultStyle:
+        return QuoteCardStyles.defaultStyle(
+          quote: widget.quote,
+          onFavorite: widget.onFavorite,
+          onShare: _showShareOptions,
+          isFavorited: widget.isFavorited,
+        );
       case QuoteCardStyle.minimal:
         return QuoteCardStyles.minimal(
           quote: widget.quote,
@@ -470,19 +480,8 @@ class _QuoteCardState extends State<QuoteCard> {
       final imageFile = await _captureShareableWidget();
       if (imageFile != null) {
         // Try to save directly to gallery first
-        final success = await GallerySaver.saveImage(imageFile.path);
-        
-        if (success == true) {
-          _showSuccessSnackBar('Quote card saved to gallery!');
-        } else {
-          // Fallback to share if direct save fails
-          await Share.shareXFiles(
-            [XFile(imageFile.path)],
-            text: 'Check out this quote!',
-            subject: 'Quote Card',
-          );
-          _showSuccessSnackBar('Quote card ready to save! Use the share menu to save to gallery.');
-        }
+        await Gal.putImage(imageFile.path);
+        _showSuccessSnackBar('Quote card saved to gallery!');
       }
     } catch (e) {
       // If gallery save fails, fallback to share

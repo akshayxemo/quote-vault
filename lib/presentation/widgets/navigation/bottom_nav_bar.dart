@@ -103,7 +103,7 @@ class BottomNavBar extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: isActive 
-              ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+              ? Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.1)
               : Colors.transparent,
         ),
         child: Column(
@@ -115,7 +115,7 @@ class BottomNavBar extends StatelessWidget {
                 isActive ? activeIcon : icon,
                 key: ValueKey(isActive),
                 color: isActive 
-                    ? Theme.of(context).primaryColor
+                    ? Theme.of(context).colorScheme.tertiary
                     : Theme.of(context).iconTheme.color?.withValues(alpha: 0.6),
                 size: 24,
               ),
@@ -126,7 +126,7 @@ class BottomNavBar extends StatelessWidget {
               fontSize: 10,
               fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
               customColor: isActive 
-                  ? Theme.of(context).primaryColor
+                  ? Theme.of(context).colorScheme.tertiary
                   : null,
             ),
           ],

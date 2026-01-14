@@ -86,7 +86,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
                 final quote = _quotes[index];
                 return QuoteCard(
                   quote: quote,
-                  style: QuoteCardStyle.minimal,
+                  style: QuoteCardStyle.defaultStyle,
                   isFavorited: quote.isFavorite,
                   onFavorite: () {
                     setState(() {

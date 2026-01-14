@@ -29,7 +29,7 @@ class AppThemes {
         centerTitle: true,
       ),
       cardTheme: CardThemeData(
-        color: AppColors.minimalistCream,
+        color: AppColors.minimalistCreamCard,
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -76,7 +76,7 @@ class AppThemes {
         centerTitle: true,
       ),
       cardTheme: CardThemeData(
-        color: AppColors.midnightNavy.withValues(alpha: 0.8),
+        color: AppColors.midnightNavyCard,
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -123,7 +123,7 @@ class AppThemes {
         centerTitle: true,
       ),
       cardTheme: CardThemeData(
-        color: AppColors.sageGreen,
+        color: AppColors.sageCard,
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -170,7 +170,7 @@ class AppThemes {
         centerTitle: true,
       ),
       cardTheme: CardThemeData(
-        color: AppColors.dustyRose,
+        color: AppColors.dustyRoseCard,
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),

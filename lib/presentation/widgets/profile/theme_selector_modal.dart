@@ -210,7 +210,7 @@ class ThemeSelectorModal extends StatelessWidget {
             if (isSelected)
               Icon(
                 Icons.check_circle,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.tertiary,
                 size: 24,
               )
             else

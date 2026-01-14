@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:quote_vault/core/theme/theme_provider.dart';
+import 'package:quote_vault/core/settings/text_size_provider.dart';
 import 'package:quote_vault/core/constants/app_constants.dart';
 import 'package:quote_vault/app/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/di/injection_container.dart' as di;
 import 'core/di/auth_injections.dart';
 import 'presentation/bloc/auth/auth_bloc.dart';
@@ -21,17 +23,23 @@ void main() async{
   // Initialize dependency injection
   await di.init();
   
-  runApp(const MyApp());
+  // Initialize SharedPreferences for TextSizeProvider
+  final prefs = await SharedPreferences.getInstance();
+
+  runApp(MyApp(prefs: prefs));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences prefs;
+
+  const MyApp({super.key, required this.prefs});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => TextSizeProvider(prefs)),
         BlocProvider<AuthBloc>(
           create: (_) => sl<AuthBloc>()
             ..add(const CheckSessionEvent()),

@@ -1,8 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quote_vault/domain/entities/quote.dart';
 import 'package:quote_vault/presentation/widgets/common/themed_text.dart';
+import 'package:quote_vault/core/settings/text_size_provider.dart';
 
 class QuoteCardStyles {
+  static Widget defaultStyle({
+    required Quote quote,
+    VoidCallback? onFavorite,
+    VoidCallback? onShare,
+    bool isFavorited = false,
+  }) {
+    return Builder(
+      builder: (context) {
+        final textSize = context.watch<TextSizeProvider>().textSize;
+
+        return Card(
+          elevation: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Quote text
+                ThemedText.body(
+                  '"${quote.text}"',
+                  fontSize: textSize,
+                  fontStyle: FontStyle.italic,
+                  height: 1.4,
+                ),
+
+                const SizedBox(height: 16),
+
+                // Author and actions row
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ThemedText.body(
+                            '— ${quote.author}',
+                            fontWeight: FontWeight.w500,
+                          ),
+                          const SizedBox(height: 4),
+                          ThemedText.caption(
+                            _formatDate(quote.createdAt),
+                            fontSize: 12,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Action buttons
+                    IconButton(
+                      onPressed: onFavorite,
+                      icon: Icon(
+                        isFavorited ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorited
+                            ? Theme.of(context).colorScheme.tertiary
+                            : null,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: onShare,
+                      icon: const Icon(Icons.share),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   static Widget minimal({
     required Quote quote,
     VoidCallback? onFavorite,
