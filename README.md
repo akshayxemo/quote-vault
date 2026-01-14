@@ -221,10 +221,8 @@ This project was built using **AI-assisted development** with a structured appro
 
 ## 🎨 Design Resources
 
-- **Figma Design**: [Link to Figma design file]
-- **Stitch Design**: [Link to Stitch design]
+- **Stitch Design**: [Link to Stitch design](https://stitch.withgoogle.com/projects/13299458710616212066)
 
-*Note: Add your actual design links here*
 
 ## 📦 Key Dependencies
 
@@ -247,17 +245,21 @@ This project was built using **AI-assisted development** with a structured appro
 3. **Search Optimization**: Search is functional but could benefit from debouncing
 4. **Profile Management**: User profile editing is not yet implemented
 5. **Quote Submission**: Users cannot submit their own quotes yet
+6. **Password Reset**: Forgot/reset password functionality is not implemented
+7. **Collections Feature**: Collections page and its entire functionality are not created
+8. **Daily Reminders**: Push notifications for daily quote reminders are not implemented
 
 ### Incomplete Features
 
+- [ ] Password reset/forgot password flow
+- [ ] Collections page (create, manage, and organize quote collections)
+- [ ] Daily reminder notifications
 - [ ] Local caching for offline access
 - [ ] User profile customization
 - [ ] Quote submission by users
 - [ ] Social sharing to specific platforms
-- [ ] Quote collections/folders
 - [ ] Advanced search filters
 - [ ] Quote statistics and analytics
-- [ ] Push notifications for daily quotes
 - [ ] Multi-language support
 
 ### Known Issues
