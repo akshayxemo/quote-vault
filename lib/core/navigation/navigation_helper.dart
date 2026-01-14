@@ -1,5 +1,3 @@
-import 'package:go_router/go_router.dart';
-
 /// Helper class for navigation-related utilities
 class NavigationHelper {
   /// Get the current navigation index based on the current route

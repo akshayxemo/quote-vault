@@ -23,7 +23,9 @@ class ThemeSelectorWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppConstants.mediumSpacing),
-          ...ThemeType.values.map((theme) {
+          ...ThemeType.values.asMap().entries.map((entry) {
+            final index = entry.key;
+            final theme = entry.value;
             return ListTile(
               title: Text(_getThemeName(theme)),
               subtitle: Text(_getThemeDescription(theme)),
@@ -35,7 +37,7 @@ class ThemeSelectorWidget extends StatelessWidget {
                   ? const Icon(Icons.check, color: Colors.green)
                   : null,
               onTap: () {
-                themeProvider.setTheme(theme);
+                themeProvider.setTheme(index);
                 Navigator.pop(context);
               },
             );
